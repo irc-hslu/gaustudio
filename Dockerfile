@@ -36,14 +36,16 @@ ARG TORCH_CUDA_ARCH_LIST="8.0 8.6 8.7 8.9"
 RUN ln -sf /usr/bin/python3.9 /usr/bin/python && \
     ln -sf /usr/bin/python3.9 /usr/bin/python3
 
-# Install Python dependencies
-COPY . /opt/gaustudio
-RUN --mount=type=cache,target=/root/.cache/pip pip install --upgrade pip && pip install -r /opt/gaustudio/requirements.txt
 
 # Install mvs-texturing
 RUN git clone https://github.com/nmoehrle/mvs-texturing.git /tmp/mvs-texturing
 RUN cd /tmp/mvs-texturing && mkdir build && cd build && cmake .. && make -j
 RUN cp /tmp/mvs-texturing/build/apps/texrecon/texrecon /usr/local/bin/ && rm -rf /tmp/mvs-texturing
+
+# Install Python dependencies
+COPY . /opt/gaustudio
+RUN --mount=type=cache,target=/root/.cache/pip pip install --upgrade pip && pip install -r /opt/gaustudio/requirements.txt
+
 
 
 # Install GauStudio rasterizer and framework
@@ -51,7 +53,7 @@ RUN cd /opt/gaustudio/submodules/gaustudio-diff-gaussian-rasterization && python
 RUN cd /opt/gaustudio/ && pip install -e .
 
 # Optional: Install PyTorch3D (commented as per instructions)
-# RUN pip install git+https://github.com/facebookresearch/pytorch3d.git
+RUN pip install git+https://github.com/facebookresearch/pytorch3d.git@V0.7.8
 
 # Set the entrypoint to bash for flexibility
 CMD ["bash"]
