@@ -1,6 +1,6 @@
 plyfile
-torch
-torchvision
+torch==2.4.1
+torchvision==0.19.1
 tqdm
 opencv-python-headless
 vdbfusion
@@ -9,3 +9,8 @@ omegaconf
 einops
 kiui
 scipy
+open3d
+numpy<2
+PyMCubes
+scikit-image
+#git+https://github.com/facebookresearch/pytorch3d.git@V0.7.8
