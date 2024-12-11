@@ -1,6 +1,6 @@
 services:
   gaustudio:
-    image: gaustudio
+    image: irchslu/gaustudio
     build:
       context: .
       dockerfile: Dockerfile
